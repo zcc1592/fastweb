@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="30 minutes">
+	<property name="log.base" value="/usr/local/tomcat/logs/fastweb/" />
+	<property name="LOG_PATTERN" value="%date [%thread] %-5level %logger{80} - %msg%n" />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="server_all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.base}/server.${HOSTNAME}.log</File>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.base}/server_all.${HOSTNAME}.log.%d{yyyy-MM-dd}</FileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="commone-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.base}/commone-error.${HOSTNAME}.log</File>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.base}/commone-error.log.${HOSTNAME}.%d{yyyy-MM-dd}</FileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="commone-error"></appender-ref>
+		<appender-ref ref="server_all"></appender-ref>
+	</root>
+
+	<logger name="druid.sql.Statement">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="error" />
+	</logger>
+
+
+</configuration>

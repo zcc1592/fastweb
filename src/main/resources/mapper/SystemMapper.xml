@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starter.fastweb.mapper.SystemMapper" >
+    <resultMap id="FunctionResultMap" type="com.starter.fastweb.entity.Function" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="FUNCTION_CODE" property="functionCode" jdbcType="VARCHAR" />
+        <result column="FUNCTION_NAME" property="functionName" jdbcType="VARCHAR" />
+        <result column="URI" property="uri" jdbcType="VARCHAR" />
+        <result column="FUNCTION_LEVEL" property="functionLevel" jdbcType="INTEGER" />
+        <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="BIT" />
+        <result column="DISPLAY_ORDER" property="displayOrder" jdbcType="INTEGER" />
+        <result column="CHECKABLE" property="checkable" jdbcType="BIT" />
+        <result column="FUNCTION_TYPE" property="functionType" jdbcType="VARCHAR" />
+        <result column="LEAF" property="leaf" jdbcType="VARCHAR" />
+        <result column="ICON_CLS" property="iconCls" jdbcType="VARCHAR" />
+        <result column="CLS" property="cls" jdbcType="VARCHAR" />
+        <result column="FUNCTION_DESC" property="functionDesc" jdbcType="VARCHAR" />
+        <result column="FUNCTION_SEQ" property="functionSeq" jdbcType="VARCHAR" />
+        <result column="SYSTEM_TYPE" property="systemType" jdbcType="INTEGER" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+        <association property="parentFunction" javaType="com.starter.fastweb.entity.Function">
+            <id property="id" column="ENTRY_0_ID" />
+            <result property="functionCode" column="ENTRY_0_FUNCTION_CODE" />
+            <result property="functionName" column="ENTRY_0_FUNCTION_NAME" />
+            <result property="uri" column="ENTRY_0_URI" />
+            <result property="functionLevel" column="ENTRY_0_FUNCTION_LEVEL" />
+            <result property="parentCode" column="ENTRY_0_PARENT_CODE" />
+            <result property="active" column="ENTRY_0_ACTIVE" />
+            <result property="displayOrder" column="ENTRY_0_DISPLAY_ORDER" />
+            <result property="checkable" column="ENTRY_0_CHECKABLE" />
+            <result property="functionType" column="ENTRY_0_FUNCTION_TYPE" />
+            <result property="leaf" column="ENTRY_0_LEAF" />
+            <result property="iconCls" column="ENTRY_0_ICON_CLS" />
+            <result property="cls" column="ENTRY_0_CLS" />
+            <result property="functionDesc" column="ENTRY_0_FUNCTION_DESC" />
+            <result property="functionSeq" column="ENTRY_0_FUNCTION_SEQ" />
+            <result property="createUser" column="ENTRY_0_CREATE_USER"
+                    javaType="String" jdbcType="VARCHAR" />
+            <result property="createDate" column="ENTRY_0_CREATE_DATE"
+                    javaType="DATE" jdbcType="TIMESTAMP" />
+            <result property="modifyUser" column="ENTRY_0_MODIFY_USER"
+                    javaType="String" jdbcType="VARCHAR" />
+            <result property="modifyDate" column="ENTRY_0_MODIFY_DATE"
+                    javaType="DATE" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
+
+    <resultMap id="RoleResultMap" type="com.starter.fastweb.entity.Role" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="BIT" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="RoleFunctionResultMap" type="com.starter.fastweb.entity.RoleFunction" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+        <result column="FUNCTION_CODE" property="functionCode" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="DictionaryDataResultMap" type="com.starter.fastweb.entity.DictionaryData" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="DICT_TYPE" property="dictType" jdbcType="VARCHAR" />
+        <result column="VALUE_ORDER" property="valueOrder" jdbcType="DECIMAL" />
+        <result column="VALUE_NAME" property="valueName" jdbcType="VARCHAR" />
+        <result column="VALUE_CODE" property="valueCode" jdbcType="VARCHAR" />
+        <result column="LANGUAGE" property="language" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="CHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="CREATE_USER_CODE" property="createUserCode" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_CODE" property="modifyUserCode" jdbcType="VARCHAR" />
+        <result column="NOTE_INFO" property="noteInfo" jdbcType="VARCHAR" />
+        <result column="VERSION_NO" property="versionNo" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <resultMap id="DictionaryTypeResultMap" type="com.starter.fastweb.entity.DictionaryType" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="CHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="CREATE_USER_CODE" property="createUserCode" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_CODE" property="modifyUserCode" jdbcType="VARCHAR" />
+        <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+        <result column="TYPE_ALIAS" property="typeAlias" jdbcType="VARCHAR" />
+        <result column="IS_LEAF" property="isLeaf" jdbcType="CHAR" />
+    </resultMap>
+
+
+    <sql id="DictionaryType_Column_List" >
+        ID, TYPE_NAME, ACTIVE, CREATE_TIME, MODIFY_TIME, CREATE_USER_CODE, MODIFY_USER_CODE,
+        PARENT_CODE, TYPE_ALIAS, IS_LEAF
+    </sql>
+
+
+    <sql id="DictionaryData_Column_List" >
+        ID, DICT_TYPE, VALUE_ORDER, VALUE_NAME, VALUE_CODE, LANGUAGE, ACTIVE, CREATE_TIME,
+        MODIFY_TIME, CREATE_USER_CODE, MODIFY_USER_CODE, NOTE_INFO, VERSION_NO
+    </sql>
+
+    <sql id="RoleFunction_Column_List" >
+      ID, ROLE_CODE, FUNCTION_CODE
+    </sql>
+
+    <sql id="Function_Column_List" >
+        ID, FUNCTION_CODE, FUNCTION_NAME, URI, FUNCTION_LEVEL, PARENT_CODE, ACTIVE, DISPLAY_ORDER,
+        CHECKABLE, FUNCTION_TYPE, LEAF, ICON_CLS, CLS, FUNCTION_DESC, FUNCTION_SEQ, SYSTEM_TYPE,
+        CREATE_USER, CREATE_DATE, MODIFY_USER, MODIFY_DATE
+    </sql>
+
+    <sql id="Role_Column_List" >
+        ID, ROLE_CODE, ROLE_NAME, ROLE_DESC, ACTIVE, CREATE_USER, CREATE_DATE, MODIFY_USER, MODIFY_DATE
+    </sql>
+
+    <!-- function表返回查询字段-->
+    <sql id="function_select_param">
+		MASTER.ID,
+		MASTER.FUNCTION_CODE,
+		MASTER.FUNCTION_NAME,
+		MASTER.URI,
+		MASTER.FUNCTION_LEVEL,
+		MASTER.PARENT_CODE,
+		MASTER.ACTIVE,
+		MASTER.DISPLAY_ORDER,
+		MASTER.CHECKABLE,
+		MASTER.FUNCTION_TYPE,
+		MASTER.LEAF,
+		MASTER.ICON_CLS,
+		MASTER.CLS,
+		MASTER.FUNCTION_DESC,
+		MASTER.FUNCTION_SEQ,
+		MASTER.CREATE_USER,
+		MASTER.CREATE_DATE,
+		MASTER.MODIFY_USER,
+		MASTER.MODIFY_DATE,
+		ENTRY_0.ID AS ENTRY_0_ID,
+		ENTRY_0.FUNCTION_CODE AS ENTRY_0_FUNCTION_CODE,
+		ENTRY_0.FUNCTION_NAME AS ENTRY_0_FUNCTION_NAME,
+		ENTRY_0.URI AS ENTRY_0_URI,
+		ENTRY_0.FUNCTION_LEVEL AS ENTRY_0_FUNCTION_LEVEL,
+		ENTRY_0.PARENT_CODE AS ENTRY_0_PARENT_CODE,
+		ENTRY_0.ACTIVE AS ENTRY_0_ACTIVE,
+		ENTRY_0.DISPLAY_ORDER AS ENTRY_0_DISPLAY_ORDER,
+		ENTRY_0.CHECKABLE AS ENTRY_0_CHECKABLE,
+		ENTRY_0.FUNCTION_TYPE AS ENTRY_0_FUNCTION_TYPE,
+		ENTRY_0.LEAF AS ENTRY_0_LEAF,
+		ENTRY_0.ICON_CLS AS ENTRY_0_ICON_CLS,
+		ENTRY_0.CLS AS ENTRY_0_CLS,
+		ENTRY_0.FUNCTION_DESC AS ENTRY_0_FUNCTION_DESC,
+		ENTRY_0.FUNCTION_SEQ AS ENTRY_0_FUNCTION_SEQ,
+		ENTRY_0.CREATE_USER AS ENTRY_0_CREATE_USER,
+		ENTRY_0.CREATE_DATE AS ENTRY_0_CREATE_DATE,
+		ENTRY_0.MODIFY_USER AS ENTRY_0_MODIFY_USER,
+		ENTRY_0.MODIFY_DATE AS ENTRY_0_MODIFY_DATE
+	</sql>
+
+    <!-- 查询字典数据 -->
+    <select id="selectDictionaryData" resultMap="DictionaryDataResultMap" parameterType="com.starter.fastweb.entity.DictionaryData" >
+        select
+        <include refid="DictionaryData_Column_List" />
+        from T_DICTIONARY_DATA
+        <where>
+            <if test="id != null and id != ''" >
+                ID = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="dictType != null and dictType != ''" >
+                AND DICT_TYPE = #{dictType,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY VALUE_ORDER
+    </select>
+
+    <!-- 查询字典类型 -->
+    <select id="selectDictionaryType" resultMap="DictionaryTypeResultMap" parameterType="com.starter.fastweb.entity.DictionaryType" >
+        select
+        <include refid="DictionaryType_Column_List" />
+        from t_dictionary_type
+        <where>
+            <if test="id != null and id != ''" >
+                ID = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="parentCode != null and parentCode != ''" >
+                AND PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY CREATE_TIME
+    </select>
+
+    <!-- 删除字典数据 -->
+    <delete id="deleteDictionaryData" parameterType="java.lang.String" >
+        delete from T_DICTIONARY_DATA
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 插入字典数据 -->
+    <insert id="insertDictionaryData" parameterType="com.starter.fastweb.entity.DictionaryData" >
+        insert into T_DICTIONARY_DATA (ID, DICT_TYPE, VALUE_ORDER,
+          VALUE_NAME, VALUE_CODE, LANGUAGE,
+          ACTIVE, CREATE_TIME, MODIFY_TIME,
+          CREATE_USER_CODE, MODIFY_USER_CODE, NOTE_INFO,
+          VERSION_NO)
+        values (#{id,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR}, #{valueOrder,jdbcType=DECIMAL},
+          #{valueName,jdbcType=VARCHAR}, #{valueCode,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR},
+          #{active,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+          #{createUserCode,jdbcType=VARCHAR}, #{modifyUserCode,jdbcType=VARCHAR}, #{noteInfo,jdbcType=VARCHAR},
+          #{versionNo,jdbcType=DECIMAL})
+    </insert>
+
+    <!-- 更新字典数据 -->
+    <update id="updateDictionaryDataSelective" parameterType="com.starter.fastweb.entity.DictionaryData" >
+        update T_DICTIONARY_DATA
+        <set >
+            <if test="dictType != null" >
+                DICT_TYPE = #{dictType,jdbcType=VARCHAR},
+            </if>
+            <if test="valueOrder != null" >
+                VALUE_ORDER = #{valueOrder,jdbcType=DECIMAL},
+            </if>
+            <if test="valueName != null" >
+                VALUE_NAME = #{valueName,jdbcType=VARCHAR},
+            </if>
+            <if test="valueCode != null" >
+                VALUE_CODE = #{valueCode,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null" >
+                LANGUAGE = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null" >
+                ACTIVE = #{active,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUserCode != null" >
+                CREATE_USER_CODE = #{createUserCode,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUserCode != null" >
+                MODIFY_USER_CODE = #{modifyUserCode,jdbcType=VARCHAR},
+            </if>
+            <if test="noteInfo != null" >
+                NOTE_INFO = #{noteInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null" >
+                VERSION_NO = #{versionNo,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <!-- 插入角色 -->
+    <insert id="insertRole" parameterType="com.starter.fastweb.entity.Role" >
+        insert into t_role (ID, ROLE_CODE, ROLE_NAME,
+          ROLE_DESC, ACTIVE, CREATE_USER,
+          CREATE_DATE, MODIFY_USER, MODIFY_DATE
+          )
+        values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
+          #{roleDesc,jdbcType=VARCHAR}, #{active,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
+          #{createDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}
+          )
+    </insert>
+
+    <!-- 批量插入rolefunction -->
+    <insert id="insertRoleFunction" >
+        insert into t_role_function (ID, ROLE_CODE, FUNCTION_CODE)
+        <foreach collection="roleFunctions" item="roleFunction" index="index" separator="union all" >
+            select
+            #{roleFunction.id,jdbcType=VARCHAR}, #{roleFunction.roleCode,jdbcType=VARCHAR}, #{roleFunction.functionCode,jdbcType=VARCHAR}
+            from dual
+        </foreach>
+    </insert>
+
+    <!-- 修改Role -->
+    <update id="updateRoleByCodeSelective" parameterType="com.starter.fastweb.entity.Role" >
+        update t_role
+        <set >
+            <if test="roleName != null" >
+                ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null" >
+                ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null" >
+                ACTIVE = #{active,jdbcType=VARCHAR},
+            </if>
+
+            <if test="createUser != null" >
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null" >
+                MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null" >
+                MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateRoleByCode" parameterType="com.starter.fastweb.entity.Role" >
+        update t_role
+        set
+            ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+            ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+            ACTIVE = #{active,jdbcType=VARCHAR},
+            CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+            MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP}
+        where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    </update>
+
+
+
+    <select id="selectRole" resultMap="RoleResultMap" parameterType="com.starter.fastweb.entity.Role">
+        SELECT
+        <include refid="Role_Column_List" />
+        from t_role
+        <where>
+            ACTIVE = 'Y'
+            <if test="roleName != null and roleName != ''" >
+                AND ROLE_NAME like '%'|| #{roleName,jdbcType=VARCHAR} ||'%'
+            </if>
+        </where>
+        order by MODIFY_DATE desc
+    </select>
+
+    <select id="selectRoleByCode" resultMap="RoleResultMap" parameterType="string">
+        SELECT
+        <include refid="Role_Column_List" />
+        from t_role
+        where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据code删除role -->
+    <delete id="deleteRoleByCode" parameterType="java.lang.String" >
+        delete from t_role
+        where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 根据roleCode删除role 与 function的关联关系 -->
+    <delete id="deleteRoleFunctionByRoleCode" parameterType="java.lang.String" >
+        delete from t_role_function
+        where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectRoleFunction" parameterType="com.starter.fastweb.entity.RoleFunction" resultMap="RoleFunctionResultMap">
+        select
+        <include refid="RoleFunction_Column_List" />
+        from t_role_function
+        <where>
+            <if test="roleCode != null and roleCode != ''" >
+                ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+            </if>
+            <if test="functionCode != null and functionCode != ''" >
+                AND FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+    </select>
+
+
+    <insert id="insertFunction" parameterType="com.starter.fastweb.entity.Function" >
+        insert into t_function (ID, FUNCTION_CODE, FUNCTION_NAME,
+          URI, FUNCTION_LEVEL, PARENT_CODE,
+          ACTIVE, DISPLAY_ORDER, CHECKABLE,
+          FUNCTION_TYPE, LEAF, ICON_CLS,
+          CLS, FUNCTION_DESC, FUNCTION_SEQ,
+          SYSTEM_TYPE, CREATE_USER, CREATE_DATE,
+          MODIFY_USER, MODIFY_DATE)
+        values (#{id,jdbcType=VARCHAR}, #{functionCode,jdbcType=VARCHAR}, #{functionName,jdbcType=VARCHAR},
+          #{uri,jdbcType=VARCHAR}, #{functionLevel,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR},
+          #{active,jdbcType=VARCHAR}, #{displayOrder,jdbcType=VARCHAR}, #{checkable,jdbcType=VARCHAR},
+          #{functionType,jdbcType=VARCHAR}, #{leaf,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR},
+          #{cls,jdbcType=VARCHAR}, #{functionDesc,jdbcType=VARCHAR}, #{functionSeq,jdbcType=VARCHAR},
+          #{systemType,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+          #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 根据functionCode 查找Function -->
+    <select id="selectFunction" resultMap="FunctionResultMap" parameterType="com.starter.fastweb.entity.Function">
+        select
+        <include refid="Function_Column_List" />
+        from t_function
+        <where>
+            <if test="functionCode != null" >
+                FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+            </if>
+            <if test="parentCode != null" >
+                AND PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+            </if>
+            <if test="functionType != null" >
+                AND FUNCTION_TYPE = #{functionType,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by DISPLAY_ORDER
+    </select>
+
+    <!-- 根据functionCode 查找Function -->
+    <select id="selectFunctionByCode" resultMap="FunctionResultMap" >
+        select
+        <include refid="Function_Column_List" />
+        from t_function
+        where FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据functionCode删除Function -->
+    <delete id="deleteFunctionByCode" parameterType="java.lang.String" >
+        delete from t_function
+        where FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 通过functionCode递归获取该节点的所有子节点-->
+    <select id="selectAllChildFunctionByCode" resultMap="FunctionResultMap">
+        with recursive r as
+        (
+            select
+            c.ID,
+            c.FUNCTION_CODE,
+            c.FUNCTION_NAME,
+            c.URI,
+            c.FUNCTION_LEVEL,
+            c.PARENT_CODE,
+            c.ACTIVE,
+            c.DISPLAY_ORDER,
+            c.CHECKABLE,
+            c.FUNCTION_TYPE,
+            c.LEAF,
+            c.ICON_CLS,
+            c.CLS,
+            c.FUNCTION_DESC,
+            c.FUNCTION_SEQ,
+            c.CREATE_USER,
+            c.CREATE_DATE,
+            c.MODIFY_USER,
+            c.MODIFY_DATE,
+            p.ID AS ENTRY_0_ID,
+            p.FUNCTION_CODE AS ENTRY_0_FUNCTION_CODE,
+            p.FUNCTION_NAME AS ENTRY_0_FUNCTION_NAME,
+            p.URI AS ENTRY_0_URI,
+            p.FUNCTION_LEVEL AS ENTRY_0_FUNCTION_LEVEL,
+            p.PARENT_CODE AS ENTRY_0_PARENT_CODE,
+            p.ACTIVE AS ENTRY_0_ACTIVE,
+            p.DISPLAY_ORDER AS ENTRY_0_DISPLAY_ORDER,
+            p.CHECKABLE AS ENTRY_0_CHECKABLE,
+            p.FUNCTION_TYPE AS ENTRY_0_FUNCTION_TYPE,
+            p.LEAF AS ENTRY_0_LEAF,
+            p.ICON_CLS AS ENTRY_0_ICON_CLS,
+            p.CLS AS ENTRY_0_CLS,
+            p.FUNCTION_DESC AS ENTRY_0_FUNCTION_DESC,
+            p.FUNCTION_SEQ AS ENTRY_0_FUNCTION_SEQ,
+            p.CREATE_USER AS ENTRY_0_CREATE_USER,
+            p.CREATE_DATE AS ENTRY_0_CREATE_DATE,
+            p.MODIFY_USER AS ENTRY_0_MODIFY_USER,
+            p.MODIFY_DATE AS ENTRY_0_MODIFY_DATE
+            from t_function c left join t_function p on c.parent_code = p.function_code where c.parent_code = #{functionCode,jdbcType=VARCHAR} and c.ACTIVE = 1
+            union all
+            select
+            t_function.ID,
+            t_function.FUNCTION_CODE,
+            t_function.FUNCTION_NAME,
+            t_function.URI,
+            t_function.FUNCTION_LEVEL,
+            t_function.PARENT_CODE,
+            t_function.ACTIVE,
+            t_function.DISPLAY_ORDER,
+            t_function.CHECKABLE,
+            t_function.FUNCTION_TYPE,
+            t_function.LEAF,
+            t_function.ICON_CLS,
+            t_function.CLS,
+            t_function.FUNCTION_DESC,
+            t_function.FUNCTION_SEQ,
+            t_function.CREATE_USER,
+            t_function.CREATE_DATE,
+            t_function.MODIFY_USER,
+            t_function.MODIFY_DATE,
+            r.ID AS ENTRY_0_ID,
+            r.FUNCTION_CODE AS ENTRY_0_FUNCTION_CODE,
+            r.FUNCTION_NAME AS ENTRY_0_FUNCTION_NAME,
+            r.URI AS ENTRY_0_URI,
+            r.FUNCTION_LEVEL AS ENTRY_0_FUNCTION_LEVEL,
+            r.PARENT_CODE AS ENTRY_0_PARENT_CODE,
+            r.ACTIVE AS ENTRY_0_ACTIVE,
+            r.DISPLAY_ORDER AS ENTRY_0_DISPLAY_ORDER,
+            r.CHECKABLE AS ENTRY_0_CHECKABLE,
+            r.FUNCTION_TYPE AS ENTRY_0_FUNCTION_TYPE,
+            r.LEAF AS ENTRY_0_LEAF,
+            r.ICON_CLS AS ENTRY_0_ICON_CLS,
+            r.CLS AS ENTRY_0_CLS,
+            r.FUNCTION_DESC AS ENTRY_0_FUNCTION_DESC,
+            r.FUNCTION_SEQ AS ENTRY_0_FUNCTION_SEQ,
+            r.CREATE_USER AS ENTRY_0_CREATE_USER,
+            r.CREATE_DATE AS ENTRY_0_CREATE_DATE,
+            r.MODIFY_USER AS ENTRY_0_MODIFY_USER,
+            r.MODIFY_DATE AS ENTRY_0_MODIFY_DATE
+            from t_function,r where t_function.parent_code = r.function_code and t_function.ACTIVE = 1
+        )select * from r;
+    </select>
+
+
+
+    <!-- 根据functionCode 修改Function -->
+    <update id="updateFunctionSelectiveByCode" parameterType="com.starter.fastweb.entity.Function" >
+        update t_function
+        <set >
+            <if test="functionName != null" >
+                FUNCTION_NAME = #{functionName,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null" >
+                URI = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="functionLevel != null" >
+                FUNCTION_LEVEL = #{functionLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null" >
+                PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null" >
+                ACTIVE = #{active,jdbcType=VARCHAR},
+            </if>
+            <if test="displayOrder != null" >
+                DISPLAY_ORDER = #{displayOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="checkable != null" >
+                CHECKABLE = #{checkable,jdbcType=VARCHAR},
+            </if>
+            <if test="functionType != null" >
+                FUNCTION_TYPE = #{functionType,jdbcType=VARCHAR},
+            </if>
+            <if test="leaf != null" >
+                LEAF = #{leaf,jdbcType=VARCHAR},
+            </if>
+            <if test="iconCls != null" >
+                ICON_CLS = #{iconCls,jdbcType=VARCHAR},
+            </if>
+            <if test="cls != null" >
+                CLS = #{cls,jdbcType=VARCHAR},
+            </if>
+            <if test="functionDesc != null" >
+                FUNCTION_DESC = #{functionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="functionSeq != null" >
+                FUNCTION_SEQ = #{functionSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="systemType != null" >
+                SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null" >
+                MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null" >
+                MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateFunctionByCode" parameterType="com.starter.fastweb.entity.Function" >
+        update t_function
+        set
+          FUNCTION_NAME = #{functionName,jdbcType=VARCHAR},
+          URI = #{uri,jdbcType=VARCHAR},
+          FUNCTION_LEVEL = #{functionLevel,jdbcType=VARCHAR},
+          PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+          ACTIVE = #{active,jdbcType=VARCHAR},
+          DISPLAY_ORDER = #{displayOrder,jdbcType=VARCHAR},
+          CHECKABLE = #{checkable,jdbcType=VARCHAR},
+          FUNCTION_TYPE = #{functionType,jdbcType=VARCHAR},
+          LEAF = #{leaf,jdbcType=VARCHAR},
+          ICON_CLS = #{iconCls,jdbcType=VARCHAR},
+          CLS = #{cls,jdbcType=VARCHAR},
+          FUNCTION_DESC = #{functionDesc,jdbcType=VARCHAR},
+          FUNCTION_SEQ = #{functionSeq,jdbcType=VARCHAR},
+          SYSTEM_TYPE = #{systemType,jdbcType=VARCHAR},
+          MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+          MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP}
+        where FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+    </update>
+  
+</mapper>

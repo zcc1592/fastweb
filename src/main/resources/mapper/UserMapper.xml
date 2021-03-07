@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.starter.fastweb.mapper.UserMapper" >
+
+    <resultMap id="FunctionResultMap" type="com.starter.fastweb.entity.Function" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="FUNCTION_CODE" property="functionCode" jdbcType="VARCHAR" />
+        <result column="FUNCTION_NAME" property="functionName" jdbcType="VARCHAR" />
+        <result column="URI" property="uri" jdbcType="VARCHAR" />
+        <result column="FUNCTION_LEVEL" property="functionLevel" jdbcType="INTEGER" />
+        <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="BIT" />
+        <result column="DISPLAY_ORDER" property="displayOrder" jdbcType="INTEGER" />
+        <result column="CHECKABLE" property="checkable" jdbcType="BIT" />
+        <result column="FUNCTION_TYPE" property="functionType" jdbcType="VARCHAR" />
+        <result column="LEAF" property="leaf" jdbcType="BIT" />
+        <result column="ICON_CLS" property="iconCls" jdbcType="VARCHAR" />
+        <result column="CLS" property="cls" jdbcType="VARCHAR" />
+        <result column="FUNCTION_DESC" property="functionDesc" jdbcType="VARCHAR" />
+        <result column="FUNCTION_SEQ" property="functionSeq" jdbcType="VARCHAR" />
+        <result column="SYSTEM_TYPE" property="systemType" jdbcType="INTEGER" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+        <association property="parentFunction" javaType="com.starter.fastweb.entity.Function">
+            <id property="id" column="ENTRY_0_ID" />
+            <result property="functionCode" column="ENTRY_0_FUNCTION_CODE" />
+            <result property="functionName" column="ENTRY_0_FUNCTION_NAME" />
+            <result property="uri" column="ENTRY_0_URI" />
+            <result property="functionLevel" column="ENTRY_0_FUNCTION_LEVEL" />
+            <result property="parentCode" column="ENTRY_0_PARENT_CODE" />
+            <result property="active" column="ENTRY_0_ACTIVE" />
+            <result property="displayOrder" column="ENTRY_0_DISPLAY_ORDER" />
+            <result property="checkable" column="ENTRY_0_CHECKABLE" />
+            <result property="functionType" column="ENTRY_0_FUNCTION_TYPE" />
+            <result property="leaf" column="ENTRY_0_LEAF" />
+            <result property="iconCls" column="ENTRY_0_ICON_CLS" />
+            <result property="cls" column="ENTRY_0_CLS" />
+            <result property="functionDesc" column="ENTRY_0_FUNCTION_DESC" />
+            <result property="functionSeq" column="ENTRY_0_FUNCTION_SEQ" />
+            <result property="createUser" column="ENTRY_0_CREATE_USER"
+                    javaType="String" jdbcType="VARCHAR" />
+            <result property="createDate" column="ENTRY_0_CREATE_DATE"
+                    javaType="DATE" jdbcType="TIMESTAMP" />
+            <result property="modifyUser" column="ENTRY_0_MODIFY_USER"
+                    javaType="String" jdbcType="VARCHAR" />
+            <result property="modifyDate" column="ENTRY_0_MODIFY_DATE"
+                    javaType="DATE" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
+
+    <resultMap id="UserResultMap" type="com.starter.fastweb.entity.User" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="USER_ACCOUNT" property="userAccount" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+        <result column="ACTIVE" property="active" jdbcType="BIT" />
+        <association property="node" javaType="com.starter.fastweb.entity.NodeEntity">
+            <result column="NODE_NAME" property="nodeName" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <resultMap id="RoleResultMap" type="com.starter.fastweb.entity.Role" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <result column="ROLE_DESC" property="roleDesc" jdbcType="VARCHAR" />
+        <result column="ACTIVE" property="active" jdbcType="BIT" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="MODIFY_USER" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Role_Column_List" >
+        ID, ROLE_CODE, ROLE_NAME, ROLE_DESC, ACTIVE, CREATE_USER, CREATE_DATE, MODIFY_USER, MODIFY_DATE
+    </sql>
+
+    <sql id="User_Column_List" >
+        ID, USER_ACCOUNT, PASSWORD, USER_NAME, PHONE, CREATE_USER, CREATE_DATE,
+        MODIFY_USER, MODIFY_DATE, ACTIVE
+    </sql>
+
+    <select id="selectUser" resultMap="UserResultMap" parameterType="com.starter.fastweb.entity.User">
+      SELECT
+        u.ID, u.USER_ACCOUNT, u.PASSWORD, u.USER_NAME, u.phone, u.CREATE_USER, u.CREATE_DATE,
+        u.MODIFY_USER, u.MODIFY_DATE, u.ACTIVE, n.NODE_NAME
+      FROM t_user u
+      <where>
+          <if test="userAccount != null and userAccount != ''">
+              USER_ACCOUNT like '%'|| #{userAccount,jdbcType=VARCHAR} ||'%'
+          </if>
+          <if test="userName != null and userName != ''">
+              AND USER_NAME like '%'|| #{userName,jdbcType=VARCHAR} ||'%'
+          </if>
+      </where>
+      order by CREATE_DATE desc
+    </select>
+
+    <select id="selectUserByAccount" resultMap="UserResultMap" parameterType="string">
+        SELECT
+        <include refid="User_Column_List" />
+        FROM t_user
+        WHERE USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM t_user
+        WHERE USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteUserRole" parameterType="string">
+        DELETE FROM t_user_role
+        WHERE USER_CODE = #{userAccount,jdbcType=VARCHAR}
+    </delete>
+
+
+
+    <insert id="insertUser" parameterType="com.starter.fastweb.entity.User" >
+        insert into t_user (ID, USER_ACCOUNT, PASSWORD,
+          USER_NAME, phone,
+          CREATE_USER, CREATE_DATE, MODIFY_USER,
+          MODIFY_DATE, ACTIVE)
+        values (alm_user_SEQ.Nextval, #{userAccount,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+          #{userName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+          #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR},
+          #{modifyDate,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT})
+  </insert>
+
+    <insert id="insertUserRole" parameterType="com.starter.fastweb.entity.UserRole">
+        insert into t_user_role (ID, ROLE_CODE, USER_CODE
+          )
+        values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}
+          )
+    </insert>
+
+    <update id="updateUserSelective" parameterType="com.starter.fastweb.entity.User" >
+        update t_user
+        <set >
+            <if test="password != null" >
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null" >
+                MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null" >
+                MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="active != null" >
+                ACTIVE = #{active,jdbcType=BIT},
+            </if>
+        </set>
+        where USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectRoleByUserAccount" parameterType="string" resultMap="RoleResultMap">
+      select
+      <include refid="Role_Column_List"/>
+      FROM t_role
+      where ROLE_CODE
+      in (select ROLE_CODE from t_user_role ur where ur.USER_CODE = #{userAccount,jdbcType=VARCHAR})
+    </select>
+
+
+    <select id="selectFunctionByUserAccount" resultMap="FunctionResultMap" parameterType="string">
+      select
+      f.ID, f.FUNCTION_CODE, f.FUNCTION_NAME, f.URI, f.FUNCTION_LEVEL, f.PARENT_CODE, f.ACTIVE, f.DISPLAY_ORDER,
+    f.CHECKABLE, f.FUNCTION_TYPE, f.LEAF, f.ICON_CLS, f.CLS, f.FUNCTION_DESC, f.FUNCTION_SEQ, f.SYSTEM_TYPE,
+    f.CREATE_USER, f.CREATE_DATE, f.MODIFY_USER, f.MODIFY_DATE
+      from t_user u, t_user_role ur,
+        t_role r, t_role_function rf,
+        t_function f
+      where u.USER_ACCOUNT = ur.user_code
+      and ur.role_code = r.role_code
+      and r.role_code = rf.role_code
+      and rf.FUNCTION_CODE = f.FUNCTION_CODE
+      and f.active = 1
+      and r.active = 1
+      and u.USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR}
+      order by f.function_seq, f.DISPLAY_ORDER
+    </select>
+
+
+
+</mapper>
