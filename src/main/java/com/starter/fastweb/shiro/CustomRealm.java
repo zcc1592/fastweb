@@ -46,7 +46,7 @@ public class CustomRealm extends AuthorizingRealm {
             if(user == null){
                 return null;
             }
-            return new SimpleAuthenticationInfo(userAccount, user.getPassword(), ByteSource.Util.bytes(user.getUserAccount()), getName());
+            return new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getUserAccount()), getName());
         }
         return null;
     }
