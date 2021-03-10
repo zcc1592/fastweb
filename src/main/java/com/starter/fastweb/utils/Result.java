@@ -29,4 +29,9 @@ public class Result<T> implements Serializable {
 		this.success = success;
 	}
 
+	public static <T> Result<T> success(T data) {
+
+		return null;
+	}
+
 }
